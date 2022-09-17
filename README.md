@@ -1,2 +1,5 @@
 # Initiate the Lab Assignment
-Run the main.c file
+
+Execute below in the terminal to start the project
+
+`./main`

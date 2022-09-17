@@ -80,7 +80,3 @@ node_t *search(node_t *head, int size) {
 }
 
 #endif
-
-
-
-

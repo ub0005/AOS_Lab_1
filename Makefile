@@ -1,19 +1,19 @@
 #This is a makefile
-CC      = gcc
-CFLAGS  = -c
-RM      = rm -rf
 
+RM	= rm -rf
+	
 default: all
 
-all: mymalloc mymallocinterface mylibrary main clean
+all: mymalloc mylibrary main clean
 
 mymalloc:
-	$(CC) $(CFLAGS) mymalloc.c
-mymallocinterface:
-	$(CC) $(CFALGS) mymalloc.h
+	gcc -c mymalloc.c
+
 mylibrary:
-	ar rcs my_library.a mymalloc.o mymalloc.h.gch
+	ar rcs libmymalloc.a mymalloc.o
+
 main:
-	$(CC) -o main main.c my_library.a
+	gcc -g -I . main.c -L. -lmymalloc -o main 
+
 clean:
-	$(RM) my_library.a mymalloc.o mymalloc.h.gch
+	$(RM) libmymalloc.a mymalloc.o
