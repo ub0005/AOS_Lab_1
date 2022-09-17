@@ -26,38 +26,24 @@ void *mymalloc (int size) {
     if (head == NULL) {
         // if the head is NULL, allocate a chunk of memory using mmap
         head = initializeMemory();
-        node_t *block = search(head, actualNeededSize);
-        size_t rem_size = block->size - actualNeededSize;
-
-        header_t *ret = (header_t*)block;
-        ret->size = size;
-        ret = (void*) ret + sizeof(header_t);
-
-
-        // allocate a new block using rem_size
-        node_t *new_block = (node_t*)((void*)block + actualNeededSize);
-        new_block->size = rem_size;
-        if(block == head) {
-            new_block->next = head->next;
-            head = new_block;
-        } else {
-            //previous(block)->next = new_block;
-            new_block->next = block->next;
-        }
-        return ret;
+        allocateBlockMemory(actualNeededSize, size);
     } else {
-        node_t *block = search(head, actualNeededSize);
-        size_t rem_size = block->size - actualNeededSize;
+        allocateBlockMemory(actualNeededSize, size);
+    }
+}
 
-        header_t *ret = (header_t*)block;
-        ret->size = size;
-        ret = (void*) ret + sizeof(header_t);
+header_t *allocateBlockMemory(int actualNeededSize, int size) {
+    node_t *block = search(head, actualNeededSize);
+    size_t rem_size = block->size - actualNeededSize;
 
+    header_t *ret = (header_t*)block;
+    ret->size = size;
+    ret = (void*) ret + sizeof(header_t);
 
+    if (actualNeededSize != block->size) {
         // allocate a new block using rem_size
         node_t *new_block = (node_t*)((void*)block + actualNeededSize);
         new_block->size = rem_size;
-
         if(block == head) {
             new_block->next = head->next;
             head = new_block;

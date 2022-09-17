@@ -23,4 +23,6 @@ void myfree(void *ptr);
 
 node_t *search(node_t *head, int size);
 
+header_t *allocateBlockMemory(int actualNeededSize, int size);
+
 #endif
